@@ -1,3 +1,17 @@
 spring:
   application:
     name: credito-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/credito-constituido
+    username: credito
+    password: credito
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  sql:
+    init:
+      mode: always
+server:
+  port: 8080

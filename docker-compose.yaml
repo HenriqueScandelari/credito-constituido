@@ -6,9 +6,9 @@ services:
     networks:
       - app_network
     environment:
-      POSTGRES_DB: primewild
-      POSTGRES_USER: prime
-      POSTGRES_PASSWORD: wild
+      POSTGRES_DB: credito-constituido
+      POSTGRES_USER: credito
+      POSTGRES_PASSWORD: credito
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:

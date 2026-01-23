@@ -1,4 +1,4 @@
-package com.infuse.credito_api;
+package com.infuse.credito.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

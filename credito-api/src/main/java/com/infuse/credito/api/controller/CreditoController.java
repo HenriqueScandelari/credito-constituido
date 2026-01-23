@@ -1,10 +1,13 @@
-package com.infuse.credito_api.controller;
+package com.infuse.credito.api.controller;
 
-import com.infuse.credito_api.model.CreditoDTO;
-import com.infuse.credito_api.service.CreditoService;
+import com.infuse.credito.api.controller.dto.CreditoDTO;
+import com.infuse.credito.api.service.CreditoService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/creditos")
@@ -16,11 +19,17 @@ public class CreditoController {
         this.creditoService = creditoService;
     }
 
-    @GetMapping
-    public CreditoDTO getByNumeroNfes() {
+    @GetMapping("{numeroNfse}")
+    public List<CreditoDTO> getByNumeroNfes(@PathVariable String numeroNfse) {
 
-        Long nfse = 0L;
-        CreditoDTO dto = creditoService.getByNumeroNfse(nfse);
-        return dto;
+        List<CreditoDTO> result = creditoService.getByNumeroNfse(numeroNfse);
+        return result;
+    }
+
+    @GetMapping("/credito/{numeroCredito}")
+    public CreditoDTO getByNumeroCredito(@PathVariable String numeroCredito) {
+
+        CreditoDTO result = creditoService.getByNumeroCredito(numeroCredito);
+        return result;
     }
 }
