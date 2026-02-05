@@ -13,3 +13,11 @@ CREATE TABLE IF NOT EXISTS credito
     valor_deducao 	DECIMAL(15, 2) NOT NULL,
     base_calculo  	DECIMAL(15, 2) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS users
+(
+    id          TEXT PRIMARY KEY UNIQUE NOT NULL,
+    login       TEXT UNIQUE NOT NULL,
+    password    TEXT NOT NULL,
+    role        TEXT NOT NULL
+);
