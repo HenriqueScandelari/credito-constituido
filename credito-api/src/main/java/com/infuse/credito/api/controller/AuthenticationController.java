@@ -1,8 +1,10 @@
 package com.infuse.credito.api.controller;
 
 import com.infuse.credito.api.controller.dto.AuthenticationDTO;
+import com.infuse.credito.api.controller.dto.LoginResponseDTO;
 import com.infuse.credito.api.controller.dto.RegisterDTO;
 import com.infuse.credito.api.model.User;
+import com.infuse.credito.api.security.TokenService;
 import com.infuse.credito.api.service.AuthorizationService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +19,20 @@ public class AuthenticationController {
 
     private final AuthenticationManager manager;
     private final AuthorizationService service;
+    private final TokenService tokenService;
 
-    public AuthenticationController(AuthenticationManager manager, AuthorizationService service) {
+    public AuthenticationController(AuthenticationManager manager, AuthorizationService service, TokenService tokenService) {
         this.manager = manager;
         this.service = service;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO login) {
         var userPass = new UsernamePasswordAuthenticationToken(login.login(), login.password());
         var auth = manager.authenticate(userPass);
-
-        return ResponseEntity.ok().body(userPass);
+        var token = tokenService.generateToken((User) auth.getPrincipal());
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")
