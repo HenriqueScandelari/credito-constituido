@@ -1,4 +1,4 @@
-package com.infuse.credito.api.security;
+package com.infuse.credito.api.infra.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

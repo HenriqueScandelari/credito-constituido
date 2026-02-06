@@ -1,4 +1,4 @@
-package com.infuse.credito.api.security;
+package com.infuse.credito.api.infra.security;
 
 import com.infuse.credito.api.service.AuthorizationService;
 import jakarta.servlet.FilterChain;

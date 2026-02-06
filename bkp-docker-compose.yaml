@@ -1,0 +1,59 @@
+#version: '3.4'
+
+services:
+  postgres:
+    image: postgres:15.14-alpine3.21
+    networks:
+      - app_network
+    environment:
+      POSTGRES_DB: credito-constituido
+      POSTGRES_USER: credito
+      POSTGRES_PASSWORD: credito
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432" # Expose PostgreSQL port
+
+  zookeeper:
+    container_name: ZOOKEEPER
+    image: confluentinc/cp-zookeeper:latest
+    networks:
+      - app_network
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    container_name: KAFKA
+    image: confluentinc/cp-kafka:latest
+    networks:
+      - app_network
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://192.168.15.10:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafdrop:
+    container_name: KAFDROP
+    image: obsidiandynamics/kafdrop:latest
+    networks:
+      - app_network
+    depends_on:
+      - kafka
+    ports:
+      - "19000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: kafka:29092
+
+networks:
+  app_network:
+
+volumes:
+  postgres_data:

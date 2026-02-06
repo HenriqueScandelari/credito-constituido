@@ -4,7 +4,7 @@ import com.infuse.credito.api.controller.dto.AuthenticationDTO;
 import com.infuse.credito.api.controller.dto.LoginResponseDTO;
 import com.infuse.credito.api.controller.dto.RegisterDTO;
 import com.infuse.credito.api.model.User;
-import com.infuse.credito.api.security.TokenService;
+import com.infuse.credito.api.infra.security.TokenService;
 import com.infuse.credito.api.service.AuthorizationService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
