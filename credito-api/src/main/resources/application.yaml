@@ -13,6 +13,13 @@ spring:
   sql:
     init:
       mode: always
+  kafka:
+    # Comma-delimited list of host:port pairs for all Kafka components
+    bootstrap-servers: "localhost:9092"
+    producer:
+      # Serializer class for keys and values
+      key-serializer: "org.apache.kafka.common.serialization.StringSerializer"
+      value-serializer: "org.apache.kafka.common.serialization.StringSerializer"
 server:
   port: 8080
 

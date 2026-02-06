@@ -1,7 +1,9 @@
 package com.infuse.credito.api.service;
 
 import com.infuse.credito.api.controller.dto.CreditoDTO;
+import com.infuse.credito.api.infra.logging.dto.LogDTO;
 import com.infuse.credito.api.repository.CreditoRepository;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -10,23 +12,17 @@ import java.util.List;
 @Service
 public class CreditoService {
 	private final CreditoRepository repository;
+	private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public CreditoService(CreditoRepository repository) {
+    public CreditoService(CreditoRepository repository, KafkaTemplate kafkaTemplate) {
         this.repository = repository;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     public List<CreditoDTO> getByNumeroNfse(String nfse) {
 		List<CreditoDTO> list = repository.findByNumeroNfse(nfse).stream().map(CreditoDTO::fromModel).toList();
-        CreditoDTO creditoDTO = new CreditoDTO("123456",
-                	"7891011",
-                	"2024-02-25",
-                	BigDecimal.valueOf(1500.75),
-                	"ISSQN",
-                	"Sim",
-					BigDecimal.valueOf(5.0),
-					BigDecimal.valueOf(30000.00),
-					BigDecimal.valueOf(5000.00),
-					BigDecimal.valueOf(25000.00));
+		LogDTO log = new LogDTO("/credito/numeroNfse/" + nfse, "GET", nfse, list.toString(), java.time.LocalDateTime.now());
+		kafkaTemplate.send("credito-hist", log.toString());
         return list;
     }
 
