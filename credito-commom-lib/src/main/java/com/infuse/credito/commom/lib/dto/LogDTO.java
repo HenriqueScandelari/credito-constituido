@@ -1,4 +1,4 @@
-package com.infuse.credito.api.infra.logging.dto;
+package com.infuse.credito.commom.lib.dto;
 
 import java.time.LocalDateTime;
 

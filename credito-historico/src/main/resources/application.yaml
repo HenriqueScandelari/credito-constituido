@@ -1,3 +1,32 @@
 spring:
   application:
     name: credito-historico
+  json:
+    trusted:
+      packages: "*"
+
+  kafka:
+    # Comma-delimited list of host:port pairs for all Kafka components
+    bootstrap-servers: "localhost:9092"
+    consumer:
+      # Serializer class for keys and values
+      key-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+      value-deserializer: "org.springframework.kafka.support.serializer.JacksonJsonDeserializer"
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+      group-id: "hist-group"
+      auto-offset-reset: earliest
+
+  mongodb:
+    host: localhost
+    port: 27017
+    database: credito_historico_db
+#    username: credito_user
+#    password: credito_pass
+#    authentication-database: admin
+
+server:
+  port: 8181

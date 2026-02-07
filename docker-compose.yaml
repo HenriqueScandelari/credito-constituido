@@ -14,6 +14,19 @@ services:
     ports:
       - "5432:5432" # Expose PostgreSQL port
 
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: credito_historico_db
+#      MONGO_INITDB_ROOT_USERNAME: credito_user
+#      MONGO_INITDB_ROOT_PASSWORD: credito_user
+    volumes:
+      - mongodb_data:/data/db
+
   kafka:
     image: confluentinc/cp-kafka:7.5.0
     ports:
@@ -48,3 +61,5 @@ networks:
 volumes:
   postgres_data:
   kafka_data:
+  mongodb_data:
+    driver: local

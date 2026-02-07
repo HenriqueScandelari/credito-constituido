@@ -1,4 +1,4 @@
-package com.infuse.credito_historico;
+package com.infuse.credito.historico;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
